@@ -8,7 +8,6 @@ namespace DistroLab2.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
-        int bög = 6;
     }
 
     public class ExternalLoginListViewModel
