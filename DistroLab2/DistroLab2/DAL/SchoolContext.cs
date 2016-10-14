@@ -7,11 +7,12 @@ namespace DistroLab2.DAL
     public class SchoolContext : DbContext
     {
 
-        public SchoolContext() : base("SchoolContext")
+        public SchoolContext() : base("DefaultConnection")
         {
         }
 
         public DbSet<Student> Students { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
