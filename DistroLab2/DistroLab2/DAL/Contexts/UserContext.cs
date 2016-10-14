@@ -8,17 +8,18 @@ using System.Web;
 
 namespace DistroLab2.DAL
 {
-    public class IdentityContext : IdentityDbContext<ApplicationUser>
+    public class UserContext : IdentityDbContext<ApplicationUser>
     {
-        public IdentityContext() 
+        public UserContext() 
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-        public static IdentityContext Create()
+        public static UserContext Create()
         {
-            return new IdentityContext();
+            return new UserContext();
         }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Group> Groups { get; set; }
     }
 }

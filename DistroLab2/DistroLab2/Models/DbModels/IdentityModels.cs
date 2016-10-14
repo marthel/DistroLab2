@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DistroLab2.Models
 {
@@ -17,10 +18,15 @@ namespace DistroLab2.Models
             // Add custom user claims here
             return userIdentity;
         }
+        [ForeignKey("SenderId")]
         public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
+
+
         public ApplicationUser()
         {
             Messages = new List<Message>();
+            Groups = new List<Group>();
         }
     }
 }
