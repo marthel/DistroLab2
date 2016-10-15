@@ -12,6 +12,7 @@ namespace DistroLab2.DAL
     {
         protected override void Seed(GroupContext context)
         {
+            Console.WriteLine("KUKEN i FITTAN");
             var groups = new List<Group>
             {
             new Group{GroupId=1,Name="grupp 1"},

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DistroLab2.DAL.Contexts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,13 +12,12 @@ namespace DistroLab2.Models
         [Key]
         public int GroupId { get; set; }
         public String Name { get; set; }
-
-        public virtual ICollection<ApplicationUser> Users { get; set; }
-        public virtual ICollection<Message> Messages { get; set; }
-        public Group()
+        public ICollection<User> User { get; set; }
+        public ICollection<Message> Messages { get; set; }
+       /* public Group()
         {
             Messages = new List<Message>();
             Users = new List<ApplicationUser>();
-        }
+        }*/
     }
 }

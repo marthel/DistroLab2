@@ -11,6 +11,13 @@ namespace DistroLab2.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+
+      /*  public ApplicationUser()
+        {
+            Messages = new List<Message>();
+            Groups = new List<Group>();
+        }*/
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -18,15 +25,11 @@ namespace DistroLab2.Models
             // Add custom user claims here
             return userIdentity;
         }
-        [ForeignKey("SenderId")]
-        public virtual ICollection<Message> Messages { get; set; }
-        public virtual ICollection<Group> Groups { get; set; }
+        //[ForeignKey("SenderId")]
+        public ICollection<Message> Messages { get; set; }
+        public ICollection<Group> Groups { get; set; }
 
 
-        public ApplicationUser()
-        {
-            Messages = new List<Message>();
-            Groups = new List<Group>();
-        }
+
     }
 }

@@ -196,16 +196,28 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="DAL\Contexts\GroupContext.cs" />
+    <Compile Include="DAL\Contexts\GroupMigrations\201610151545593_InitialCreate.cs" />
+    <Compile Include="DAL\Contexts\GroupMigrations\201610151545593_InitialCreate.Designer.cs">
+      <DependentUpon>201610151545593_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Contexts\GroupMigrations\Configuration.cs" />
+    <Compile Include="DAL\Contexts\MessageMigrations\201610151634354_InitialCreate.cs" />
+    <Compile Include="DAL\Contexts\MessageMigrations\201610151634354_InitialCreate.Designer.cs">
+      <DependentUpon>201610151634354_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Contexts\MessageMigrations\Configuration.cs" />
+    <Compile Include="DAL\Contexts\UserMigrations\201610151536374_InitialCreate1.cs" />
+    <Compile Include="DAL\Contexts\UserMigrations\201610151536374_InitialCreate1.Designer.cs">
+      <DependentUpon>201610151536374_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbModels\User.cs" />
     <Compile Include="DAL\Contexts\UserContext.cs" />
     <Compile Include="DAL\Contexts\MessageContext.cs" />
-    <Compile Include="DAL\Contexts\UserMigrations\201610141544062_InitialCreate.cs" />
-    <Compile Include="DAL\Contexts\UserMigrations\201610141544062_InitialCreate.Designer.cs">
-      <DependentUpon>201610141544062_InitialCreate.cs</DependentUpon>
-    </Compile>
     <Compile Include="DAL\Contexts\UserMigrations\Configuration.cs" />
     <Compile Include="DAL\Initializers\GroupInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -279,6 +291,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\Message\Delete.cshtml" />
+    <Content Include="Views\Message\Details.cshtml" />
+    <Content Include="Views\Message\Edit.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -292,8 +314,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\Contexts\UserMigrations\201610141544062_InitialCreate.resx">
-      <DependentUpon>201610141544062_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\Contexts\GroupMigrations\201610151545593_InitialCreate.resx">
+      <DependentUpon>201610151545593_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\Contexts\MessageMigrations\201610151634354_InitialCreate.resx">
+      <DependentUpon>201610151634354_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\Contexts\UserMigrations\201610151536374_InitialCreate1.resx">
+      <DependentUpon>201610151536374_InitialCreate1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

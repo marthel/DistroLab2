@@ -19,7 +19,9 @@ namespace DistroLab2.DAL
         {
             return new UserContext();
         }
-        public DbSet<Message> Messages { get; set; }
+
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Message> Messages { get; set; }
+
     }
 }
