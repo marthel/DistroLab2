@@ -10,9 +10,9 @@ namespace DistroLab2.DAL
 {
     public class UserContext : IdentityDbContext<ApplicationUser>
     {
-        public UserContext() 
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public UserContext() : base("DefaultConnection")
         {
+
         }
 
         public static UserContext Create()
@@ -20,8 +20,12 @@ namespace DistroLab2.DAL
             return new UserContext();
         }
 
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<Message> Messages { get; set; }
+
+       
+        public virtual DbSet<Group> Groups { get; set; }
+        //public DbSet<ApplicationUser> Users { get; set; }
+
+
 
     }
 }

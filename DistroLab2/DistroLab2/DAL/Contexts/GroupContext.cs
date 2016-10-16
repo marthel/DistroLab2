@@ -1,4 +1,5 @@
 ﻿using DistroLab2.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,8 +14,8 @@ namespace DistroLab2.DAL.Contexts
     {
         public GroupContext() : base("DefaultConnection")
         {
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.ProxyCreationEnabled = false;
+          //  Configuration.LazyLoadingEnabled = false;
+           // Configuration.ProxyCreationEnabled = false;
         }
 
         public static GroupContext Create()
@@ -22,25 +23,42 @@ namespace DistroLab2.DAL.Contexts
             return new GroupContext();
         }
 
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<Message> Messages { get; set; }
+        // public DbSet<Message> Messages { get; set; }    tagit bort för test
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+         protected override void OnModelCreating(DbModelBuilder modelBuilder)
+         {
+             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // IMPORTANT: we are mapping the entity User to the same table as the entity ApplicationUser
-            modelBuilder.Entity<User>().ToTable("User");
-        }
+            //modelBuilder.Entity<User>().ToTable("User");
 
-        public DbQuery<T> Query<T>() where T : class
-        {
-            return Set<T>().AsNoTracking();
+
+          /*  modelBuilder.Entity<Group>()
+                .HasMany(u => u.User)
+                .WithMany(u => u.Groups)
+                .Map(m =>
+                {
+                    m.ToTable("GroupUsers");
+                    m.MapLeftKey("GroupID");
+                    m.MapRightKey("UserID");
+                    
+                });*/
+
+            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+            base.OnModelCreating(modelBuilder);
         }
+        /*
+         public DbQuery<T> Query<T>() where T : class
+         {
+             return Set<T>().AsNoTracking();
+         }*/
         /* protected override void OnModelCreating(DbModelBuilder modelBuilder)
          {
              modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

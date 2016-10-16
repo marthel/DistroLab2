@@ -1,4 +1,5 @@
 ﻿using DistroLab2.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,8 +14,8 @@ namespace DistroLab2.DAL.Contexts
     {
         public MessageContext() : base("DefaultConnection")
         {
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.ProxyCreationEnabled = false;
+          //  Configuration.LazyLoadingEnabled = false;
+          //  Configuration.ProxyCreationEnabled = false;
         }
 
         public static MessageContext Create()
@@ -23,7 +24,7 @@ namespace DistroLab2.DAL.Contexts
         }
 
 
-        public DbSet<User> UserRecievers { get; set; }
+        public DbSet<ApplicationUser> UserRecievers { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> GroupRecievers { get; set; }
 
@@ -31,17 +32,21 @@ namespace DistroLab2.DAL.Contexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            base.OnModelCreating(modelBuilder);
+            /*base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // IMPORTANT: we are mapping the entity User to the same table as the entity ApplicationUser
-            modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<User>().ToTable("User");*/
+            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+            base.OnModelCreating(modelBuilder);
         }
 
-        public DbQuery<T> Query<T>() where T : class
+       /* public DbQuery<T> Query<T>() where T : class
         {
             return Set<T>().AsNoTracking();
-        }
+        }*/
     }
 }

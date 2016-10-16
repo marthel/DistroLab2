@@ -1,8 +1,6 @@
 namespace DistroLab2.DAL.Contexts.GroupMigrations
 {
-    using Models;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -29,18 +27,6 @@ namespace DistroLab2.DAL.Contexts.GroupMigrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            Console.WriteLine("KUKEN i FITTAN");
-            var groups = new List<Group>
-            {
-            new Group{GroupId=1,Name="grupp 1"},
-            new Group{GroupId=2,Name="grupp 2"},
-            new Group{GroupId=3,Name="grupp 3"},
-            new Group{GroupId=4,Name="grupp 4"},
-            new Group{GroupId=5,Name="grupp 5"},
-            };
-
-            groups.ForEach(g => context.Groups.Add(g));
-            context.SaveChanges();
         }
     }
 }
