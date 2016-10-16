@@ -47,7 +47,7 @@ namespace DistroLab2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GroupId,Name")] Group group)
+        public ActionResult Create([Bind(Include = "GroupId,Name,ApplicationUserID")] Group group)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace DistroLab2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GroupId,Name")] Group group)
+        public ActionResult Edit([Bind(Include = "GroupId,Name,ApplicationUserID")] Group group)
         {
             if (ModelState.IsValid)
             {

@@ -38,6 +38,29 @@ namespace DistroLab2.DAL.Contexts
 
             // IMPORTANT: we are mapping the entity User to the same table as the entity ApplicationUser
             modelBuilder.Entity<User>().ToTable("User");*/
+
+            modelBuilder.Entity<Message>()
+                .HasMany(u => u.GroupRecievers)
+                .WithMany(u => u.Messages)
+                .Map(m =>
+                {
+                    m.ToTable("MessageGroup");
+                    m.MapLeftKey("MessageID");
+                    m.MapRightKey("GroupID");
+
+                });
+
+             modelBuilder.Entity<Message>()
+                .HasMany(u => u.UserRecievers)
+                .WithMany(u => u.Messages)
+                .Map(m =>
+                {
+                    m.ToTable("MessageUsers");
+                    m.MapLeftKey("MessageID");
+                    m.MapRightKey("UserID");
+
+                });
+
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });

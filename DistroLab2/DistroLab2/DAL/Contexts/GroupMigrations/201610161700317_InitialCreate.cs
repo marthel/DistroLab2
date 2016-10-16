@@ -13,6 +13,7 @@ namespace DistroLab2.DAL.Contexts.GroupMigrations
                     {
                         GroupId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
+                        ApplicationUserID = c.String(),
                     })
                 .PrimaryKey(t => t.GroupId);
             
@@ -23,9 +24,14 @@ namespace DistroLab2.DAL.Contexts.GroupMigrations
                         MessageId = c.Int(nullable: false, identity: true),
                         Text = c.String(),
                         Read = c.Boolean(nullable: false),
-                        SenderId = c.String(),
+                        SenderId = c.String(maxLength: 128),
+                        ApplicationUser_Id = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.MessageId);
+                .PrimaryKey(t => t.MessageId)
+                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id)
+                .ForeignKey("dbo.ApplicationUsers", t => t.SenderId)
+                .Index(t => t.SenderId)
+                .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
                 "dbo.ApplicationUsers",
@@ -44,8 +50,11 @@ namespace DistroLab2.DAL.Contexts.GroupMigrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(),
+                        Message_MessageId = c.Int(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Messages", t => t.Message_MessageId)
+                .Index(t => t.Message_MessageId);
             
             CreateTable(
                 "dbo.IdentityUserClaims",
@@ -99,71 +108,59 @@ namespace DistroLab2.DAL.Contexts.GroupMigrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.MessageGroups",
+                "dbo.GroupMessage",
                 c => new
                     {
-                        Message_MessageId = c.Int(nullable: false),
-                        Group_GroupId = c.Int(nullable: false),
+                        GroupID = c.Int(nullable: false),
+                        MessageID = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Message_MessageId, t.Group_GroupId })
-                .ForeignKey("dbo.Messages", t => t.Message_MessageId, cascadeDelete: true)
-                .ForeignKey("dbo.Groups", t => t.Group_GroupId, cascadeDelete: true)
-                .Index(t => t.Message_MessageId)
-                .Index(t => t.Group_GroupId);
+                .PrimaryKey(t => new { t.GroupID, t.MessageID })
+                .ForeignKey("dbo.Groups", t => t.GroupID, cascadeDelete: true)
+                .ForeignKey("dbo.Messages", t => t.MessageID, cascadeDelete: true)
+                .Index(t => t.GroupID)
+                .Index(t => t.MessageID);
             
             CreateTable(
-                "dbo.ApplicationUserGroups",
+                "dbo.GroupUsers",
                 c => new
                     {
-                        ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
-                        Group_GroupId = c.Int(nullable: false),
+                        GroupID = c.Int(nullable: false),
+                        UserID = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => new { t.ApplicationUser_Id, t.Group_GroupId })
-                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Groups", t => t.Group_GroupId, cascadeDelete: true)
-                .Index(t => t.ApplicationUser_Id)
-                .Index(t => t.Group_GroupId);
-            
-            CreateTable(
-                "dbo.ApplicationUserMessages",
-                c => new
-                    {
-                        ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
-                        Message_MessageId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.ApplicationUser_Id, t.Message_MessageId })
-                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Messages", t => t.Message_MessageId, cascadeDelete: true)
-                .Index(t => t.ApplicationUser_Id)
-                .Index(t => t.Message_MessageId);
+                .PrimaryKey(t => new { t.GroupID, t.UserID })
+                .ForeignKey("dbo.Groups", t => t.GroupID, cascadeDelete: true)
+                .ForeignKey("dbo.ApplicationUsers", t => t.UserID, cascadeDelete: true)
+                .Index(t => t.GroupID)
+                .Index(t => t.UserID);
             
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.IdentityUserRoles", "IdentityRole_Id", "dbo.IdentityRoles");
+            DropForeignKey("dbo.GroupUsers", "UserID", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.GroupUsers", "GroupID", "dbo.Groups");
+            DropForeignKey("dbo.GroupMessage", "MessageID", "dbo.Messages");
+            DropForeignKey("dbo.GroupMessage", "GroupID", "dbo.Groups");
+            DropForeignKey("dbo.ApplicationUsers", "Message_MessageId", "dbo.Messages");
+            DropForeignKey("dbo.Messages", "SenderId", "dbo.ApplicationUsers");
             DropForeignKey("dbo.IdentityUserRoles", "ApplicationUser_Id", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.ApplicationUserMessages", "Message_MessageId", "dbo.Messages");
-            DropForeignKey("dbo.ApplicationUserMessages", "ApplicationUser_Id", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.Messages", "ApplicationUser_Id", "dbo.ApplicationUsers");
             DropForeignKey("dbo.IdentityUserLogins", "ApplicationUser_Id", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.ApplicationUserGroups", "Group_GroupId", "dbo.Groups");
-            DropForeignKey("dbo.ApplicationUserGroups", "ApplicationUser_Id", "dbo.ApplicationUsers");
             DropForeignKey("dbo.IdentityUserClaims", "ApplicationUser_Id", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.MessageGroups", "Group_GroupId", "dbo.Groups");
-            DropForeignKey("dbo.MessageGroups", "Message_MessageId", "dbo.Messages");
-            DropIndex("dbo.ApplicationUserMessages", new[] { "Message_MessageId" });
-            DropIndex("dbo.ApplicationUserMessages", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.ApplicationUserGroups", new[] { "Group_GroupId" });
-            DropIndex("dbo.ApplicationUserGroups", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.MessageGroups", new[] { "Group_GroupId" });
-            DropIndex("dbo.MessageGroups", new[] { "Message_MessageId" });
+            DropIndex("dbo.GroupUsers", new[] { "UserID" });
+            DropIndex("dbo.GroupUsers", new[] { "GroupID" });
+            DropIndex("dbo.GroupMessage", new[] { "MessageID" });
+            DropIndex("dbo.GroupMessage", new[] { "GroupID" });
             DropIndex("dbo.IdentityUserRoles", new[] { "IdentityRole_Id" });
             DropIndex("dbo.IdentityUserRoles", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserLogins", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserClaims", new[] { "ApplicationUser_Id" });
-            DropTable("dbo.ApplicationUserMessages");
-            DropTable("dbo.ApplicationUserGroups");
-            DropTable("dbo.MessageGroups");
+            DropIndex("dbo.ApplicationUsers", new[] { "Message_MessageId" });
+            DropIndex("dbo.Messages", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.Messages", new[] { "SenderId" });
+            DropTable("dbo.GroupUsers");
+            DropTable("dbo.GroupMessage");
             DropTable("dbo.IdentityRoles");
             DropTable("dbo.IdentityUserRoles");
             DropTable("dbo.IdentityUserLogins");

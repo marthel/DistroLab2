@@ -201,21 +201,21 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="DAL\Contexts\GroupContext.cs" />
-    <Compile Include="DAL\Contexts\GroupMigrations\201610161346559_InitialCreate.cs" />
-    <Compile Include="DAL\Contexts\GroupMigrations\201610161346559_InitialCreate.Designer.cs">
-      <DependentUpon>201610161346559_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\Contexts\GroupMigrations\201610161700317_InitialCreate.cs" />
+    <Compile Include="DAL\Contexts\GroupMigrations\201610161700317_InitialCreate.Designer.cs">
+      <DependentUpon>201610161700317_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\Contexts\GroupMigrations\Configuration.cs" />
-    <Compile Include="DAL\Contexts\MessageMigrations\201610161348418_InitialCreate.cs" />
-    <Compile Include="DAL\Contexts\MessageMigrations\201610161348418_InitialCreate.Designer.cs">
-      <DependentUpon>201610161348418_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\Contexts\MessageMigrations\201610161701191_InitialCreate.cs" />
+    <Compile Include="DAL\Contexts\MessageMigrations\201610161701191_InitialCreate.Designer.cs">
+      <DependentUpon>201610161701191_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\Contexts\MessageMigrations\Configuration.cs" />
     <Compile Include="DAL\Contexts\UserContext.cs" />
     <Compile Include="DAL\Contexts\MessageContext.cs" />
-    <Compile Include="DAL\Contexts\UserMigrations\201610161347457_InitialCreate.cs" />
-    <Compile Include="DAL\Contexts\UserMigrations\201610161347457_InitialCreate.Designer.cs">
-      <DependentUpon>201610161347457_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\Contexts\UserMigrations\201610161659461_InitialCreate.cs" />
+    <Compile Include="DAL\Contexts\UserMigrations\201610161659461_InitialCreate.Designer.cs">
+      <DependentUpon>201610161659461_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\Contexts\UserMigrations\Configuration.cs" />
     <Compile Include="DAL\Initializers\GroupInitializer.cs" />
@@ -313,14 +313,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\Contexts\GroupMigrations\201610161346559_InitialCreate.resx">
-      <DependentUpon>201610161346559_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\Contexts\GroupMigrations\201610161700317_InitialCreate.resx">
+      <DependentUpon>201610161700317_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\Contexts\MessageMigrations\201610161348418_InitialCreate.resx">
-      <DependentUpon>201610161348418_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\Contexts\MessageMigrations\201610161701191_InitialCreate.resx">
+      <DependentUpon>201610161701191_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\Contexts\UserMigrations\201610161347457_InitialCreate.resx">
-      <DependentUpon>201610161347457_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\Contexts\UserMigrations\201610161659461_InitialCreate.resx">
+      <DependentUpon>201610161659461_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

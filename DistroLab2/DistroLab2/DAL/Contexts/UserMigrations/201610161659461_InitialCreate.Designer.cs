@@ -13,7 +13,7 @@ namespace DistroLab2.DAL.Contexts.UserMigrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201610161347457_InitialCreate"; }
+            get { return "201610161659461_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

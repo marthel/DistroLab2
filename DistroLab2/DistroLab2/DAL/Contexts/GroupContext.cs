@@ -23,9 +23,9 @@ namespace DistroLab2.DAL.Contexts
             return new GroupContext();
         }
 
-        public virtual DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
-        // public DbSet<Message> Messages { get; set; }    tagit bort för test
+        public DbSet<Message> Messages { get; set; }    
 
          protected override void OnModelCreating(DbModelBuilder modelBuilder)
          {
@@ -38,7 +38,7 @@ namespace DistroLab2.DAL.Contexts
             //modelBuilder.Entity<User>().ToTable("User");
 
 
-          /*  modelBuilder.Entity<Group>()
+           modelBuilder.Entity<Group>()
                 .HasMany(u => u.User)
                 .WithMany(u => u.Groups)
                 .Map(m =>
@@ -47,7 +47,17 @@ namespace DistroLab2.DAL.Contexts
                     m.MapLeftKey("GroupID");
                     m.MapRightKey("UserID");
                     
-                });*/
+                });
+            modelBuilder.Entity<Group>()
+                 .HasMany(u => u.Messages)
+                 .WithMany(u => u.GroupRecievers)
+                 .Map(m =>
+                 {
+                     m.ToTable("GroupMessage");
+                     m.MapLeftKey("GroupID");
+                     m.MapRightKey("MessageID");
+
+                 });
 
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);

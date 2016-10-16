@@ -18,7 +18,8 @@ namespace DistroLab2.Controllers
         // GET: Message
         public ActionResult Index()
         {
-            return View(db.Messages.ToList());
+            var messages = db.Messages.Include(m => m.Sender);
+            return View(messages.ToList());
         }
 
         // GET: Message/Details/5
@@ -39,6 +40,7 @@ namespace DistroLab2.Controllers
         // GET: Message/Create
         public ActionResult Create()
         {
+            ViewBag.SenderId = new SelectList(db.UserRecievers, "Id", "Email");
             return View();
         }
 
@@ -56,6 +58,7 @@ namespace DistroLab2.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.SenderId = new SelectList(db.UserRecievers, "Id", "Email", message.SenderId);
             return View(message);
         }
 
@@ -71,6 +74,7 @@ namespace DistroLab2.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.SenderId = new SelectList(db.UserRecievers, "Id", "Email", message.SenderId);
             return View(message);
         }
 
@@ -87,6 +91,7 @@ namespace DistroLab2.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.SenderId = new SelectList(db.UserRecievers, "Id", "Email", message.SenderId);
             return View(message);
         }
 
